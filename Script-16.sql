@@ -88,12 +88,14 @@ begin;
 commit;
 
 --Item 5
+--¿Cuál es el nombre del cliente que realizó la compra más cara?
 select nombre, monto_total as compra_mayor
 from cliente * join factura
 on cliente.rut = factura.rut_cliente
 where factura.monto_total = (select max(monto_total) from factura);
 
 --Item 6
+--¿Cuáles son los nombres de los clientes que pagaron más de 60$?
 select nombre, monto_total as compra_más_de_60$  --60 es un monto muy bajo, se repetirá más abajo con monto más grande
 from cliente * join factura
 on cliente.rut = factura.rut_cliente
@@ -105,6 +107,7 @@ on cliente.rut = factura.rut_cliente
 where factura.monto_total >= 80000;
 
 --Item 7
+--¿Cuántos clientes han comprado más de 5 productos?
 -- Primero se agrupa por clientes y se suma el total de unidades que ha comprado cada uno(indistintamente del tipo de producto)
 select cliente.nombre, sum(factura_producto.cantidad_producto) as clientes_compran_mas_de_5_unid from factura
 join factura_producto on factura.nro_factura = factura_producto.nro_factura
